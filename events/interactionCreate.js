@@ -10,14 +10,12 @@ module.exports = {
 	async execute(interaction) {
 		if (!interaction.isChatInputCommand()) return;
 
+		const command = interaction.client.commands.get(interaction.commandName);
 		// Check role of user
-		if (!interaction.member.roles.cache.has(SUPPORT_ROLE_ID)) {
+		if (!interaction.member.roles.cache.has(SUPPORT_ROLE_ID) && command.data.name != 'close-my-ticket') {
 			await interaction.reply(NO_SUPPORT_MEMBER_ERROR);
 			return;
 		}
-
-
-		const command = interaction.client.commands.get(interaction.commandName);
 
 		if (!command) {
 			console.error(`No command matching ${interaction.commandName} was found.`);
