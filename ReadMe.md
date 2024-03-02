@@ -44,3 +44,15 @@ node deploy-commands.js
 ```bash
 node bot.js
 ```
+
+## Features
+
+A "Forum" type Discord channel is used as a support channel. So you can help your users solve their problems. Each new post/thread in this forum is then considered a ticket to be processed.  
+
+- Customizable support role management
+- Rename new posts with a ticket ID to make them easier to find.
+- Allow support staff to flag a ticket as a duplicate of another, redirecting the user to the original ticket
+- Possibility of forcibly closing tickets, or waiting for user confirmation 
+- Configurable automatic deletion of inactive tickets.
+
+All configurable options can be found in the .env file, along with comments describing each feature.  
