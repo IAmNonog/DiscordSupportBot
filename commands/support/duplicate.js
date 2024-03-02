@@ -4,6 +4,7 @@ const utilities = require('../../utils/functions.js');
 const TICKET_DUPLICATE_MSG = process.env.TICKET_DUPLICATE_MSG;
 const ERROR_NOT_IN_SUPPORT_CHANNEL_MSG = process.env.ERROR_NOT_IN_SUPPORT_CHANNEL_MSG;
 const TICKET_LAST_MSG_WHEN_CLOSED = process.env.TICKET_LAST_MSG_WHEN_CLOSED;
+const TICKET_INITIAL_PING_DUPLICATE_MSG = process.env.TICKET_INITIAL_PING_DUPLICATE_MSG;
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -30,6 +31,23 @@ module.exports = {
         await interaction.reply(TICKET_DUPLICATE_MSG);
         await channel.send('- <@' + channel.ownerId + '> -> ' + linkTicket);
         await channel.send(TICKET_LAST_MSG_WHEN_CLOSED);
+
+        // try to ping user in the initial ticket (if not closed)
+        try {
+            const partsURL = linkTicket.split('/');
+            const initialID = partsURL[partsURL.length - 1];
+            const initialChannel = await client.channels.fetch(initialID);
+            if (initialChannel != null && utilities.isATicket(initialChannel)) {
+                if (!initialChannel.locked) {
+                    initialChannel.send(TICKET_INITIAL_PING_DUPLICATE_MSG + ' <@' + channel.ownerId + '>');
+                }
+            }
+
+
+        }
+        catch (e) {
+            /* empty */
+        }
 
     },
 };
