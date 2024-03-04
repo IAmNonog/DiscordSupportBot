@@ -28,8 +28,8 @@ module.exports = {
         // Get option
         const force = interaction.options.getBoolean('force');
         if (!force) {
-            await channel.send('<@' + channel.onwerId + '>');
-            await interaction.reply(TICKET_CLOSE_ASK);
+            await interaction.reply('<@' + channel.ownerId + '>');
+            await channel.send(TICKET_CLOSE_ASK);
         }
         else {
             await interaction.reply(TICKET_CLOSE_FORCE);
