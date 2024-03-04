@@ -48,7 +48,7 @@ module.exports = {
 
         // Rename ticket with ID
         const ticketID = TICKET_PREFIX + thread.id;
-        const newThreadName = '[' + ticketID + '] ' + thread.name;
+        const newThreadName = thread.name + ' [' + ticketID + '] ';
         await thread.setName(newThreadName);
 
         // Send welcome message
