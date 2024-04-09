@@ -38,12 +38,19 @@ module.exports = {
 
         // Apply the NEW_TAG if not null
         if (NEW_TICKET_TAG != 'null' && NEW_TICKET_TAG != 'NULL' && NEW_TICKET_TAG != '') {
-            const newTagID = await utilities.getTagIdFromName(thread, NEW_TICKET_TAG);
-            if (newTagID != null) {
-                // Append to tags already defined
-                const newAppliedTags = [...thread.appliedTags, newTagID];
-                await thread.setAppliedTags(newAppliedTags);
+            try {
+                const newTagID = await utilities.getTagIdFromName(thread, NEW_TICKET_TAG);
+                if (newTagID != null) {
+                    // Append to tags already defined
+                    const newAppliedTags = [...thread.appliedTags, newTagID];
+                    await thread.setAppliedTags(newAppliedTags);
+                }
             }
+            catch (e) {
+                console.log("Error in ThreadCreate (apply new tag)");
+                console.log(e);
+            }
+
         }
 
         // Rename ticket with ID
