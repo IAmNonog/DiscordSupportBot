@@ -56,11 +56,8 @@ So this is where you can translate the bot's messages. We recommend you take a l
 
 ### Deploy Commands
 
-- Deploy for dev & tests (only in your server) :
-```bash
-node deploy-commands-dev.js
-```
-- Deploy for prod (all servers) :
+
+- Deploy for prod :
 ```bash
 node deploy-commands.js
 ```
