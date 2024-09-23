@@ -4,7 +4,8 @@
   "description": "Discord Bot - support and issue ticket management",
   "main": "bot.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ."
   },
   "author": "nonog",
   "license": "ISC",
