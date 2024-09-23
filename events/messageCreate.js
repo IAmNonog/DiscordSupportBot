@@ -27,11 +27,11 @@ async function changeTagIfSupportWrite(thread, newMessageAuthor) {
                 await thread.setAppliedTags(currentTags);
             }
         }
-        catch(e) {
+        catch (e) {
             console.log("Error in 'changeTagIfSupportWrite' : ");
             console.log(e);
         }
-        
+
     }
 }
 

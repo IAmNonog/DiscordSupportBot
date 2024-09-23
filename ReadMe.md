@@ -21,7 +21,7 @@ All configurable options can be found in the .env file, along with comments desc
 ### Before starting
 
 You need :
-- NodeJS (with npm)
+- NodeJS v18 and above (with npm)
 
 ### Clone
 - Clone repository
@@ -41,7 +41,18 @@ npm install
 ```bash
 cp .env.example .env
 ```
-Fill in the necessary information in the <code>.env</code> file
+
+**Fill in the necessary information in the <code>.env</code> file**.  
+You must specify your bot discord token there, and your channel and support role support IDs.
+
+- Create configuration file
+```bash
+cp .config.example .config
+```
+You can modify the messages sent by the bot, and configure various options in the <code>.config</code> file.  
+
+So this is where you can translate the bot's messages. We recommend you take a look at this file
+
 
 ### Deploy Commands
 

@@ -2,7 +2,9 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, GatewayIntentBits, Events } = require('discord.js');
-require('dotenv').config();
+require('dotenv').config({ path: '.env' });
+require('dotenv').config({ path: '.config' });
+
 const token = process.env.DISCORD_BOT_TOKEN;
 
 
