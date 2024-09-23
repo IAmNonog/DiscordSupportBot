@@ -13,7 +13,7 @@ A "Forum" type Discord channel is used as a support channel. So you can help you
 - Possibility of forcibly closing tickets, or waiting for user confirmation 
 - Configurable automatic deletion of inactive tickets.
 
-All configurable options can be found in the .env file, along with comments describing each feature.  
+All configurable options can be found in the .config file, along with comments describing each feature.  
 
 
 ## Install
