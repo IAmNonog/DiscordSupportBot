@@ -27,7 +27,7 @@ USER DiscordBotSupport
 
 # Start the container by first running `npm install` and then starting the application
 # TODO CMD ["sh", "-c", "crond -p /tmp/crond.pid && node ."]
-CMD ["sh", "-c", "node ."]
+CMD ["sh", "-c", "npm start"]
 
 # docker build -t discord-bot-support-image .
 # docker run -d --name discord-bot-support --env-file .env -v $(pwd)/logs:/usr/src/app/logs discord-bot-support-image
