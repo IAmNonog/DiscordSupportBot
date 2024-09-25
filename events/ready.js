@@ -33,8 +33,9 @@ module.exports = {
 					scheduled: true,
 					timezone: AUTOCLOSE_CRON_TIMEZONE,
 				});
+
 			} catch (e) {
-				/* empty */
+				console.log("Error scheduling the cron job:", e);
 			}
 
 		}

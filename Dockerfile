@@ -1,9 +1,6 @@
 # Use the official Node.js image
 FROM node:20-alpine
 
-# Install crond
-# TODO : RUN apk add --no-cache bash curl cronie
-
 # Create a non-root user
 RUN adduser -S DiscordBotSupport
 
@@ -20,14 +17,15 @@ RUN npm install
 COPY . .
 
 # Adjust permissions for the logs directory at runtime
-RUN mkdir /usr/src/app/logs && chmod 775 /usr/src/app/logs
+RUN mkdir -p /usr/src/app/logs && chown -R DiscordBotSupport /usr/src/app/logs
 
 # Switch to the non-root user
 USER DiscordBotSupport
 
 # Start the container by first running `npm install` and then starting the application
-# TODO CMD ["sh", "-c", "crond -p /tmp/crond.pid && node ."]
 CMD ["sh", "-c", "npm start"]
 
+
+# docker volume create discord-bot-logs
 # docker build -t discord-bot-support-image .
-# docker run -d --name discord-bot-support --env-file .env -v $(pwd)/logs:/usr/src/app/logs discord-bot-support-image
+# docker run -d --name discord-bot-support --env-file .env -v discord-bot-logs:/usr/src/app/logs discord-bot-support-image

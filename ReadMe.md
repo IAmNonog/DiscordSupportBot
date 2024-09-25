@@ -55,6 +55,11 @@ So this is where you can translate the bot's messages. We recommend you take a l
 
 ### Build the container
 
+First, we'll create a docker volume to store bot logs (for auto-close functionality) :
+```bash
+docker volume create discord-bot-logs
+```
+Now let's build the image
 ```bash
 docker build -t discord-bot-support-image .
 ```
@@ -62,7 +67,7 @@ docker build -t discord-bot-support-image .
 ### Start the container
 
 ```bash
-docker run -d --name discord-bot-support --env-file .env -v $(pwd)/logs:/usr/src/app/logs discord-bot-support-image
+docker run -d --name discord-bot-support --env-file .env -v discord-bot-logs:/usr/src/app/logs discord-bot-support-image
 ```
 
 <br><br><br><br>
@@ -81,6 +86,7 @@ git clone https://github.com/IAmNonog/DiscordSupportBot.git
 ```
 ```bash
 cd DiscordSupportBot
+mkdir ./logs/
 ```
 
 - Install dependancies

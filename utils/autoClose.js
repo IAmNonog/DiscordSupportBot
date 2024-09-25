@@ -14,45 +14,59 @@ const fs = require('fs');
 const path = require('path');
 
 function logAction(message, start = false) {
-    const logFilePath = path.join(__dirname + '../../logs/', 'auto-close-log.txt');
-    let logMessage;
-    if(start) {
-        logMessage = `\n\n\n${new Date().toISOString()} - ${message}\n`;
+    try {
+        const logFilePath = path.join(__dirname + '../../logs/', 'auto-close-log.txt');
+        let logMessage;
+        if (start) {
+            logMessage = `\n\n\n${new Date().toISOString()} - ${message}\n`;
+        }
+        else {
+            logMessage = `${new Date().toISOString()} - ${message}\n`;
+        }
+
+        fs.appendFileSync(logFilePath, logMessage, 'utf8');
+    } catch (e) {
+        console.log(e);
     }
-    else {
-        logMessage = `${new Date().toISOString()} - ${message}\n`;
-    }
-    
-    fs.appendFileSync(logFilePath, logMessage, 'utf8');
+
 }
 
 
 async function isTicketNeedClosed(ticket, lastMessage) {
     const lastMessageText = lastMessage.content.trim();
-    
+
     if (lastMessageText.includes(TICKET_CLOSE_ASK.trim())) {
-        logAction("[NEED CLOSE] - lastMSG include TICKET_CLOSE_ASK");
+        logAction("[V] [NEED CLOSE] - lastMSG include TICKET_CLOSE_ASK");
         return true;
     }
-    if(lastMessageText.includes(AUTO_RELAUNCH_USER.trim())) {
-        logAction("[NEED CLOSE] - lastMSG include AUTO_RELAUNCH_USER");
+    else {
+        logAction("-> [X] - lastMSG doesn't include TICKET_CLOSE_ASK");
+    }
+    if (lastMessageText.includes(AUTO_RELAUNCH_USER.trim())) {
+        logAction("[V] [NEED CLOSE] - lastMSG include AUTO_RELAUNCH_USER");
         return true;
+    }
+    else {
+        logAction("-> [X] - lastMSG doesn't include AUTO_RELAUNCH_USER");
     }
     const isSupportMessage = await utilities.checkIfUserIDIsSupportMember(ticket, lastMessage.author.id);
     if (isSupportMessage && (!lastMessageText.includes(KEEP_TICKET_OPEN_MSG.trim())) && (lastMessage.author.id != ticket.ownerId)) {
-        logAction("[NEED CLOSE] - lastMSG is sent by Support AND doesn't include KEEP_TICKET_OPEN_MSG AND not send by owner");
+        logAction("[V] [NEED CLOSE] - lastMSG is sent by Support AND doesn't include KEEP_TICKET_OPEN_MSG AND not send by owner");
         return true;
     }
+    else {
+        logAction("-> [X] - lastMSG isn't sent by Support OR include KEEP_TICKET_OPEN_MSG OR send by owner");
+    }
 
-    logAction("[DON'T NEED CLOSE]");
-    
+    logAction("[X] [DON'T NEED CLOSE]");
+
     return false;
 }
 
 async function autoCloseMain(client) {
     try {
         logAction("[AUTO-SCAN] - Start", true);
-        console.log("Start AUTO-CLOSE scan");
+        console.log(`[${new Date().toISOString()}] - Start AUTO-CLOSE scan`);
         // Get the support forum with his ID
         const forumChannel = await client.channels.fetch(SUPPORT_CHANNEL_FORUM_ID);
         if (!forumChannel) {
