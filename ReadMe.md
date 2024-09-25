@@ -16,7 +16,63 @@ A "Forum" type Discord channel is used as a support channel. So you can help you
 All configurable options can be found in the .config file, along with comments describing each feature.  
 
 
-## Install
+## Install with Docker
+
+### Before starting
+
+Before you get started, you need to make sure you have Docker installed on your system, and that you're able to run the docker commands :
+
+```bash
+docker -v
+```
+
+### Clone
+
+- Clone repository :
+```bash
+git clone https://github.com/IAmNonog/DiscordSupportBot.git
+```
+```bash
+cd DiscordSupportBot
+```
+
+### Config the bot
+
+- Create config file
+```bash
+cp .env.example .env
+```
+
+**Fill in the necessary information in the <code>.env</code> file**.  
+You must specify your bot discord token there, and your channel and support role support IDs.
+
+- Create configuration file
+```bash
+cp .config.example .config
+```
+You can modify the messages sent by the bot, and configure various options in the <code>.config</code> file.  
+So this is where you can translate the bot's messages. We recommend you take a look at this file.
+
+### Build the container
+
+First, we'll create a docker volume to store bot logs (for auto-close functionality) :
+```bash
+docker volume create discord-bot-logs
+```
+Now let's build the image
+```bash
+docker build -t discord-bot-support-image .
+```
+
+### Start the container
+
+```bash
+docker run -d --name discord-bot-support --env-file .env -v discord-bot-logs:/usr/src/app/logs discord-bot-support-image
+```
+
+<br><br><br><br>
+# 
+## Install without Docker (Legacy)
 
 ### Before starting
 
@@ -30,6 +86,7 @@ git clone https://github.com/IAmNonog/DiscordSupportBot.git
 ```
 ```bash
 cd DiscordSupportBot
+mkdir ./logs/
 ```
 
 - Install dependancies
